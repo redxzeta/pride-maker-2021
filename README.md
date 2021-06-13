@@ -1,88 +1,14 @@
-# Simple React Bootstrap Template Theme
 
-Purpose is to skip the setup process when using Bootstrap and using one of the premade themes along with React Router. Sometimes I find myself repeating the same process in hobby projects or hackathons. `Pages` is where you put the page files and `Components` is where you put the UI files like Navigation Bar or Cards. Folder Structure is optional and could be customized to your liking. This could be also for beginners learning React where they want to focus on functionality first then styling later. Css files could be with their repspective page or create a new folder `Styles`.
+# Pride Maker
 
-[sample link](https://minty-template.netlify.app/)
+A brief description of what this project does and who it's for
 
-git clone
 
-`git clone https://github.com/redxzeta/react-bootstrap-watch-template.git`
+## Lessons Learned
 
-OR
+What did you learn while building this project? What challenges did you face and how did you overcome them?
 
-Use Template from above
-
-To Change themes
-
-`index.js`
-
-```
-import React from "react";
-import ReactDOM from "react-dom";
-import "bootswatch/dist/minty/bootstrap.min.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
-```
-
-Change minty into any of the names mentioned in bootswatch ie `lumen`
-
-`import "bootswatch/dist/lumen/bootstrap.min.css"; `
-
-Using the regular
-
-`import 'bootstrap/dist/css/bootstrap.min.css';`
-
-[More Themes](https://bootswatch.com/)
-
-# Adding Pages
-
-`App.js`
-Add a new route in `<Switch>` like from below and put in the component u want to use for the page
-
-more info here on [React Router Dom](https://reactrouter.com/web/guides/quick-start)
-
-```
-<Switch>
-  <Route path="/cards">
-    <Cards />
-  </Route>
-  <Route path="/test">
-    <Test />
-  </Route>
-  <Route path="/">
-    <LandingPage />
-  </Route>
-</Switch>
-```
-
-# Helpful Links
-
-[React Bootstrap](https://react-bootstrap.github.io/getting-started/introduction)
-
-[axios](https://github.com/axios/axios)
-
-[React Concepts](https://reactjs.org/docs/hello-world.html)
-
-[React Hooks](https://reactjs.org/docs/hooks-intro.html)
-
-[React Router Dom](https://reactrouter.com/web/guides/quick-start)
-
-[es6 js](https://www.javascripttutorial.net/es6/)
-
-# Deployment
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/redxzeta/react-bootstrap-watch-template)
-
-Clicking on the button deploys the site on your netlify account and clones it to your github repo
-
-I recommend signing up with [Netlify](https://www.netlify.com/) to deploy your site
+ 
 
 # Getting Started with Create React App
 
