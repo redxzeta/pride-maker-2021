@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const NavigationBar = () => {
   return (
     <Navbar bg="primary" expand="lg">
-      <Container expand="xl">
+      <Container fluid="xl">
         <Navbar.Brand as={Link} to="/">
           React-Bootstrap
         </Navbar.Brand>
