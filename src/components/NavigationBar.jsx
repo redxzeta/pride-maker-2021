@@ -6,7 +6,7 @@ const NavigationBar = () => {
     <Navbar bg="primary" expand="lg">
       <Container fluid="xl">
         <Navbar.Brand as={Link} to="/">
-          React-Bootstrap
+          Global Pride
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

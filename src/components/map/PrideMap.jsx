@@ -1,5 +1,11 @@
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 
 const containerStyle = {
   width: "100%",
@@ -25,33 +31,35 @@ const PrideMap = () => {
     lng: -118.4912,
   });
 
+  const [infoWindow, setInfoWindow] = useState(0);
+
   const locations = [
-    { lat: 31.56391, lng: -118.154312 },
-    { lat: 33.718234, lng: -118.363181 },
-    { lat: 33.727111, lng: -118.371124 },
-    { lat: 33.848588, lng: -118.209834 },
-    { lat: 33.851702, lng: -118.216968 },
-    { lat: 34.671264, lng: -118.863657 },
-    { lat: 35.304724, lng: -118.662905 },
-    { lat: 36.817685, lng: -118.699196 },
-    { lat: 36.828611, lng: -118.790222 },
-    { lat: 37.75, lng: -118.116667 },
-    { lat: 37.759859, lng: -118.128708 },
-    { lat: 37.765015, lng: -118.133858 },
-    { lat: 37.770104, lng: -118.143299 },
-    { lat: 37.7737, lng: -118.145187 },
-    { lat: 37.774785, lng: -118.137978 },
-    { lat: 37.819616, lng: -118.968119 },
-    { lat: 38.330766, lng: -118.695692 },
-    { lat: 39.927193, lng: -118.053218 },
-    { lat: 41.330162, lng: -118.865694 },
-    { lat: 42.734358, lng: -118.439506 },
-    { lat: 42.734358, lng: -118.501315 },
-    { lat: 42.735258, lng: -118.438 },
-    { lat: 43.999792, lng: -118.463352 },
+    { lat: 31.56391, lng: -118.154312, name: "Bloo" },
+    { lat: 33.718234, lng: -118.363181, name: "Bloo" },
+    { lat: 33.727111, lng: -118.371124, name: "Bloo" },
+    { lat: 33.848588, lng: -118.209834, name: "Bloo" },
+    { lat: 33.851702, lng: -118.216968, name: "Bloo" },
+    { lat: 34.671264, lng: -118.863657, name: "Bloo" },
+    { lat: 35.304724, lng: -118.662905, name: "Bloo" },
+    { lat: 36.817685, lng: -118.699196, name: "Bloo" },
+    { lat: 36.828611, lng: -118.790222, name: "Bloo" },
+    { lat: 37.75, lng: -118.116667, name: "Bloo" },
+    { lat: 37.759859, lng: -118.128708, name: "Bloo" },
+    { lat: 37.765015, lng: -118.133858, name: "Bloo" },
+    { lat: 37.770104, lng: -118.143299, name: "Bloo" },
+    { lat: 37.7737, lng: -118.145187, name: "Bloo" },
+    { lat: 37.774785, lng: -118.137978, name: "Bloo" },
+    { lat: 37.819616, lng: -118.968119, name: "Bloo" },
+    { lat: 38.330766, lng: -118.695692, name: "Bloo" },
+    { lat: 39.927193, lng: -118.053218, name: "Bloo" },
+    { lat: 41.330162, lng: -118.865694, name: "Bloo" },
+    { lat: 42.734358, lng: -118.439506, name: "Bloo" },
+    { lat: 42.734358, lng: -118.501315, name: "Bloo" },
+    { lat: 42.735258, lng: -118.438, name: "Bloo" },
+    { lat: 43.999792, lng: -118.463352, name: "Bloo" },
   ];
   const changePlacement = (e) => {
-    setUserPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+    setUserPosition({ lat: e.latLng.lat(), lng: e.latLng.lng(), name: "Bloo" });
     // setUserPosition({ lat: x, lng: y });
   };
 
@@ -84,7 +92,19 @@ const PrideMap = () => {
           icon={"https://img.icons8.com/color/48/000000/heart-rainbow.png"}
           key={index}
           position={mark}
-        />
+          onClick={() => setInfoWindow(index)}
+        >
+          {infoWindow === index ? (
+            <InfoWindow position={{ lat: mark.lat, lng: mark.lng }}>
+              <div>
+                <h5 className="text-primary">{mark.name}</h5>
+                <Button>CLICK here</Button>
+              </div>
+            </InfoWindow>
+          ) : (
+            ""
+          )}
+        </Marker>
       ))}
     </GoogleMap>
   ) : (
