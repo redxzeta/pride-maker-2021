@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
-    <Navbar bg="primary" expand="lg">
+    <Navbar bg="primary" expand="lg" variant="primary">
       <Container fluid="xl">
         <Navbar.Brand as={Link} to="/">
           Global Pride
@@ -16,7 +16,7 @@ const NavigationBar = () => {
             </Nav.Link>
           </Nav>
 
-          <Nav className="ml-auto">
+          <Nav className="ml-auto text-primary">
             <Nav.Link as={Link} to="/cards">
               Cards
             </Nav.Link>
