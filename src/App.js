@@ -22,10 +22,12 @@ function App() {
         <Container>
           <Switch>
             <Route path="/">
-              <LandingPage
-                markersList={state.markersList}
-                addNew={(newMarker) => addMarker(newMarker)}
-              />
+              {state.markersList && (
+                <LandingPage
+                  markersList={state.markersList}
+                  addNew={(newMarker) => addMarker(newMarker)}
+                />
+              )}
             </Route>
           </Switch>
         </Container>

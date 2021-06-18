@@ -5,7 +5,7 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Badge } from "react-bootstrap";
 import Heart from "./marker.png";
 import Xzeta from "./xzeta.png";
 import Min from "./min.png";
@@ -24,6 +24,7 @@ const option = {
   mapTypeControl: false,
   streetViewControl: false,
 };
+const colors = ["primary", "success", "danger", "info", "light", "dark"];
 const PrideMap = ({
   handleUserAdd,
   userPosition,
@@ -36,12 +37,12 @@ const PrideMap = ({
   });
 
   const [infoWindow, setInfoWindow] = useState(0);
-
+  const [infoUser, setInfoUser] = useState(false);
   const userPlacement = { lat: userPosition.lat, lng: userPosition.lng };
   const changeInfoIndex = (id) => {
     id === infoWindow ? setInfoWindow(9999) : setInfoWindow(id);
   };
-  console.log(markersList);
+
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -60,14 +61,24 @@ const PrideMap = ({
           strokeColor: "gold",
           strokeWeight: 2,
         }}
+        onClick={() => setInfoUser(!infoUser)}
         position={userPlacement}
       >
-        <InfoWindow position={userPlacement}>
-          <div>
-            <h5 className="text-primary">woah</h5>
-            <Button onClick={() => handleUserAdd()}>CLICK here</Button>
-          </div>
-        </InfoWindow>
+        {infoUser && (
+          <InfoWindow position={userPlacement}>
+            <div>
+              <h5 className="text-primary">Story here?</h5>
+              <Button
+                onClick={() => {
+                  setInfoWindow(false);
+                  handleUserAdd();
+                }}
+              >
+                CLICK here
+              </Button>
+            </div>
+          </InfoWindow>
+        )}
       </Marker>
       <Marker icon={Xzeta} position={center}>
         <div>
@@ -75,31 +86,36 @@ const PrideMap = ({
         </div>
       </Marker>
       <Marker icon={Min} position={center} />
-      {markersList &&
-        markersList.map((mark, index) => {
-          console.log(mark);
-          return (
-            <Marker
-              // icon={"https://img.icons8.com/color/48/000000/heart-rainbow.png"}
-              icon={Heart}
-              key={mark.id}
-              position={{ lat: mark.lat, lng: mark.lng }}
-              onClick={() => changeInfoIndex(mark.id)}
-            >
-              {infoWindow === mark.id ? (
-                <InfoWindow position={{ lat: mark.lat, lng: mark.lng }}>
-                  <div>
-                    <h4 className="text-primary">{mark.title}</h4>
-                    <h5 className="text-primary">By: {mark.name}</h5>
-                    <Button>CLICK here</Button>
-                  </div>
-                </InfoWindow>
-              ) : (
-                ""
-              )}
-            </Marker>
-          );
-        })}
+      {markersList.map((mark) => {
+        const bg = colors[Math.floor(Math.random() * 4)];
+        return (
+          <Marker
+            // icon={"https://img.icons8.com/color/48/000000/heart-rainbow.png"}
+            icon={Heart}
+            key={mark.id}
+            position={{ lat: mark.lat, lng: mark.lng }}
+            onClick={() => changeInfoIndex(mark.id)}
+          >
+            {infoWindow === mark.id ? (
+              <InfoWindow position={{ lat: mark.lat, lng: mark.lng }}>
+                <div>
+                  <h4 className="text-primary">{mark.title}</h4>
+                  <h5 className="text-primary">By: {mark.name}</h5>
+                  <Badge
+                    bg={bg}
+                    style={{ display: "block", marginBottom: "5px" }}
+                  >
+                    {mark.category}
+                  </Badge>
+                  <Button>CLICK here</Button>
+                </div>
+              </InfoWindow>
+            ) : (
+              ""
+            )}
+          </Marker>
+        );
+      })}
     </GoogleMap>
   ) : (
     <h2>Map Loading...</h2>

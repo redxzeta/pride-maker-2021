@@ -28,7 +28,15 @@ const AddStoryModal = ({ coord, show, handleClose, addNew }) => {
     });
     handleClose();
   };
-
+  const categories = [
+    "Esports",
+    "Tech",
+    "Community",
+    "School",
+    "Historical",
+    "Personal",
+    "Sports",
+  ];
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -73,11 +81,11 @@ const AddStoryModal = ({ coord, show, handleClose, addNew }) => {
             onChange={handleChange}
             as="select"
           >
-            <option className="text-dark">Esports</option>
-            <option className="text-dark">Tech</option>
-            <option className="text-dark">Community</option>
-            <option className="text-dark">Historical</option>
-            <option className="text-dark">Personal</option>
+            {categories.map((c) => (
+              <option key={c} className="text-dark">
+                {c}
+              </option>
+            ))}
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="exampleForm.ControlTextarea1">
