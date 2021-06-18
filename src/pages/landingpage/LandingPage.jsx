@@ -3,26 +3,44 @@ import PrideMap from "../../components/map/PrideMap";
 import "./landing.css";
 import { Button } from "react-bootstrap";
 import AddStoryModal from "./AddStoryModal";
-import { addNewMarker } from "../../utils/FireBaseUtils";
-const LandingPage = () => {
+
+const LandingPage = ({ addNew, markersList }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const data = {
-    lat: 34,
-    long: -118,
-    username: "bob",
-    story: "heyho",
+
+  const [userPosition, setUserPosition] = useState({
+    lat: 34.0195,
+    lng: -118.4912,
+  });
+
+  const handleUserAdd = () => {
+    setShow(true);
   };
+  console.log(markersList);
   return (
     <div className="landing">
       <h1>Landing Page</h1>
       <Button variant="primary" onClick={handleShow}>
         Launch demo modal
       </Button>
-      <AddStoryModal show={show} handleClose={handleClose} />
-      <PrideMap />
-      <Button onClick={() => addNewMarker(data)}>CLick</Button>
+      <AddStoryModal
+        addNew={(n) => addNew(n)}
+        coord={userPosition}
+        show={show}
+        handleClose={handleClose}
+      />
+      <PrideMap
+        handleUserAdd={(coord) => handleUserAdd(coord)}
+        userPosition={userPosition}
+        markersList={markersList}
+        changePlacement={(e) =>
+          setUserPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() })
+        }
+      />
+      {/* <Button onClick={() => addNewMarker(data, data.lat, data.lng)}>
+        CLick
+      </Button> */}
     </div>
   );
 };

@@ -6,6 +6,9 @@ import {
 } from "@react-google-maps/api";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import Heart from "./marker.png";
+import Xzeta from "./xzeta.png";
+import Min from "./min.png";
 
 const containerStyle = {
   width: "100%",
@@ -14,57 +17,31 @@ const containerStyle = {
 
 const center = {
   lat: 34.0195,
-  lng: -118.4912,
+  lng: -118.5912,
 };
 
 const option = {
   mapTypeControl: false,
   streetViewControl: false,
 };
-const PrideMap = () => {
+const PrideMap = ({
+  handleUserAdd,
+  userPosition,
+  changePlacement,
+  markersList,
+}) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   });
-  const [userPosition, setUserPosition] = useState({
-    lat: 34.0195,
-    lng: -118.4912,
-  });
 
   const [infoWindow, setInfoWindow] = useState(0);
 
-  const locations = [
-    { lat: 31.56391, lng: -118.154312, name: "Bloo", id: 1 },
-    { lat: 33.718234, lng: -118.363181, name: "Bloo", id: 2 },
-    { lat: 33.727111, lng: -118.371124, name: "Bloo", id: 31 },
-    { lat: 33.848588, lng: -118.209834, name: "Bloo", id: 41 },
-    { lat: 33.851702, lng: -118.216968, name: "Bloo", id: 51 },
-    { lat: 34.671264, lng: -118.863657, name: "Bloo", id: 61 },
-    { lat: 35.304724, lng: -118.662905, name: "Bloo", id: 17 },
-    { lat: 36.817685, lng: -118.699196, name: "Bloo", id: 81 },
-    { lat: 36.828611, lng: -118.790222, name: "Bloo", id: 91 },
-    { lat: 37.75, lng: -118.116667, name: "Bloo", id: 1001 },
-    { lat: 37.759859, lng: -118.128708, name: "Bloo", id: 111 },
-    { lat: 37.765015, lng: -118.133858, name: "Bloo", id: 12 },
-    { lat: 37.770104, lng: -118.143299, name: "Bloo", id: 123 },
-    { lat: 37.7737, lng: -118.145187, name: "Bloo", id: 154 },
-    { lat: 37.774785, lng: -118.137978, name: "Bloo", id: 1435 },
-    { lat: 37.819616, lng: -118.968119, name: "Bloo", id: 1345 },
-    { lat: 38.330766, lng: -118.695692, name: "Bloo", id: 1345 },
-    { lat: 39.927193, lng: -118.053218, name: "Bloo", id: 1435 },
-    { lat: 41.330162, lng: -118.865694, name: "Bloo", id: 1343453455 },
-    { lat: 42.734358, lng: -118.439506, name: "Bloo", id: 134534 },
-    { lat: 42.734358, lng: -118.501315, name: "Bloo", id: 143534534 },
-    { lat: 42.735258, lng: -118.438, name: "Bloo", id: 134534534 },
-    { lat: 43.999792, lng: -118.463352, name: "Bloo", id: 13453453 },
-  ];
-  const changePlacement = (e) => {
-    setUserPosition({ lat: e.latLng.lat(), lng: e.latLng.lng(), name: "Bloo" });
-    // setUserPosition({ lat: x, lng: y });
-  };
+  const userPlacement = { lat: userPosition.lat, lng: userPosition.lng };
   const changeInfoIndex = (id) => {
     id === infoWindow ? setInfoWindow(9999) : setInfoWindow(id);
   };
+  console.log(markersList);
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -83,40 +60,46 @@ const PrideMap = () => {
           strokeColor: "gold",
           strokeWeight: 2,
         }}
-        position={userPosition}
+        position={userPlacement}
       >
-        <InfoWindow position={{ lat: userPosition.lat, lng: userPosition.lng }}>
+        <InfoWindow position={userPlacement}>
           <div>
             <h5 className="text-primary">woah</h5>
-            <Button>CLICK here</Button>
+            <Button onClick={() => handleUserAdd()}>CLICK here</Button>
           </div>
         </InfoWindow>
       </Marker>
-      <Marker
-        icon={
-          "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-        }
-        position={center}
-      />
-      {locations.map((mark, index) => (
-        <Marker
-          icon={"https://img.icons8.com/color/48/000000/heart-rainbow.png"}
-          key={index}
-          position={mark}
-          onClick={() => changeInfoIndex(mark.id)}
-        >
-          {infoWindow === mark.id ? (
-            <InfoWindow position={{ lat: mark.lat, lng: mark.lng }}>
-              <div>
-                <h5 className="text-primary">{mark.name}</h5>
-                <Button>CLICK here</Button>
-              </div>
-            </InfoWindow>
-          ) : (
-            ""
-          )}
-        </Marker>
-      ))}
+      <Marker icon={Xzeta} position={center}>
+        <div>
+          <h5>Nathan</h5>
+        </div>
+      </Marker>
+      <Marker icon={Min} position={center} />
+      {markersList &&
+        markersList.map((mark, index) => {
+          console.log(mark);
+          return (
+            <Marker
+              // icon={"https://img.icons8.com/color/48/000000/heart-rainbow.png"}
+              icon={Heart}
+              key={mark.id}
+              position={{ lat: mark.lat, lng: mark.lng }}
+              onClick={() => changeInfoIndex(mark.id)}
+            >
+              {infoWindow === mark.id ? (
+                <InfoWindow position={{ lat: mark.lat, lng: mark.lng }}>
+                  <div>
+                    <h4 className="text-primary">{mark.title}</h4>
+                    <h5 className="text-primary">By: {mark.name}</h5>
+                    <Button>CLICK here</Button>
+                  </div>
+                </InfoWindow>
+              ) : (
+                ""
+              )}
+            </Marker>
+          );
+        })}
     </GoogleMap>
   ) : (
     <h2>Map Loading...</h2>

@@ -24,20 +24,26 @@ export const loadMarkers = () => {
     snapshot.forEach((doc) => {
       markerList.push({
         id: doc.id,
-        story: doc.data().story,
+        title: doc.data().title,
+        name: doc.data().name,
+        pronouns: doc.data().pronouns,
+        category: doc.data().category,
+        experience: doc.data().experience,
         lat: doc.data().coordinates._lat,
         lng: doc.data().coordinates._long,
+        created: doc.data().created,
       });
     });
   });
   return markerList;
 };
 
-export const addNewMarker = (form) => {
+export const addNewMarker = (form, lat, lng) => {
+  const coordinates = new firebase.firestore.GeoPoint(lat, lng);
+
   let newForm = {
-    username: form.username,
-    story: form.story,
-    coordinates: new firebase.firestore.GeoPoint(form.lat, form.long),
+    ...form,
+    coordinates: coordinates,
   };
 
   db.collection("markers")
@@ -47,7 +53,12 @@ export const addNewMarker = (form) => {
         ...newForm,
         id: res.id,
       };
+      form = {
+        ...form,
+        id: newForm.id,
+        lat: lat,
+        lng: lng,
+      };
+      return form;
     });
-  console.log(newForm);
-  return newForm;
 };

@@ -12,9 +12,9 @@ function App() {
     const data = loadMarkers();
     dispatch({ type: "FETCH", markersList: data });
   }, []);
-  // const addMarker = (newMarker) =>
-  //   dispatch({ type: "ADD", newMarker: newMarker });
-  console.log(state.markersList);
+  const addMarker = (newMarker) =>
+    dispatch({ type: "ADD", newMarker: newMarker });
+
   return (
     <Fragment>
       <Router>
@@ -22,7 +22,10 @@ function App() {
         <Container>
           <Switch>
             <Route path="/">
-              <LandingPage />
+              <LandingPage
+                markersList={state.markersList}
+                addNew={(newMarker) => addMarker(newMarker)}
+              />
             </Route>
           </Switch>
         </Container>
