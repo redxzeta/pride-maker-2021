@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import LandingPage from "./pages/landingpage/LandingPage";
+import Stories from "./pages/story/Stories";
 import { markerReducer, markersInitialState } from "./reducers/markerReducer";
 import { loadMarkers } from "./utils/FireBaseUtils";
 
@@ -21,7 +22,10 @@ function App() {
         <NavigationBar />
         <Container>
           <Switch>
-            <Route path="/">
+            <Route path="/story">
+              <Stories markersList={state.markersList} />
+            </Route>
+            <Route exact path="/">
               {state.markersList && (
                 <LandingPage
                   markersList={state.markersList}

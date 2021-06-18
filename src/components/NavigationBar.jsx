@@ -17,11 +17,8 @@ const NavigationBar = () => {
           </Nav>
 
           <Nav className="ml-auto text-primary">
-            <Nav.Link as={Link} to="/cards">
-              Cards
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Register
+            <Nav.Link as={Link} to="/story">
+              Stories
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

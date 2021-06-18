@@ -17,7 +17,7 @@ const LandingPage = ({ addNew, markersList }) => {
   const handleUserAdd = () => {
     setShow(true);
   };
-  console.log(markersList);
+
   return (
     <div className="landing">
       <h1>Landing Page</h1>
